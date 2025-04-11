@@ -1,0 +1,106 @@
+﻿<mah:MetroWindow  x:Class="Partec.Login"
+
+
+                 xmlns:local="clr-namespace:Partec"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:svg="clr-namespace:BluriSVG.Control.View.Controls;assembly=BluriSVG.Control"
+                 mc:Ignorable="d"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:mat="http://materialdesigninxaml.net/winfx/xaml/themes"
+                 Title="Partec" Height="720" Width="900" MinHeight="500" MinWidth="540"
+                 Foreground="#183B4E"
+                 FontSize="20"
+                 ShowTitleBar="False"
+                 Background="#F5EEDC"
+                 WindowStyle="None"
+
+                 >
+
+
+    <Grid Margin="20">
+
+
+        <Grid >
+            <Grid.RowDefinitions>
+                <!-- Row for Logo-->
+                <RowDefinition Height="*"/>
+                <!-- Row for Form-->
+                <RowDefinition Height="1.75*"/>
+                <!-- Row for Buttons-->
+                <RowDefinition Height="0.25*"/>
+                <!-- Row for Social Media-->
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!--Logo-->
+            <Grid Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <ContentControl Grid.Row="0" Content="{StaticResource PartecSVGIcon}" />
+                <TextBlock Grid.Row="1" Text="ParTec" HorizontalAlignment="Center" FontSize="25" Margin="0"/>
+            </Grid>
+            <!--Form-->
+            <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                <WrapPanel Margin="10" VerticalAlignment="Center" AllowDrop="False">
+                    <mat:PackIcon Kind="User" Width="20" Height="20" Margin="20" Foreground="#27548A"/>
+                    <TextBox Style="{StaticResource MaterialDesignFilledTextBox}" Padding="0" x:Name="tbUsername" Text="{Binding username,UpdateSourceTrigger=PropertyChanged}" Foreground="#183B4E" BorderThickness="0" Background="Transparent" mat:HintAssist.Hint="Usuario" Width="270" Height="30"/>
+
+                </WrapPanel>
+                <WrapPanel Margin="10" VerticalAlignment="Center" AllowDrop="False">
+                    <mat:PackIcon Kind="Password" Width="20" Height="20" Margin="20" Foreground="#27548A"/>
+                    <PasswordBox  Style="{StaticResource MaterialDesignRevealPasswordBox}" Padding="0" Foreground="#183B4E" BorderThickness="0" Background="Transparent" mat:HintAssist.Hint="Contraseña" Width="270" Height="30" mat:PasswordBoxAssist.Password="{Binding password, UpdateSourceTrigger=PropertyChanged}"/>
+                </WrapPanel>
+            </StackPanel>
+            <!--Buttons-->
+            <WrapPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Button x:Name="btnLogin" Foreground="#27548A" Style="{StaticResource MaterialDesignOutlinedButton}" BorderThickness="0" Click="btnLogin_Click"
+                        >
+                    <Button.Content>
+                        <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" >
+                            <mat:PackIcon Kind="LoginVariant" Width="20" Height="20" Padding="0"/>
+                            <TextBlock Text="Login" Padding="0" Margin="10 0 0 0" />
+                        </WrapPanel>
+                    </Button.Content>
+                </Button>
+            </WrapPanel>
+            <!--Social Media-->
+
+            <WrapPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="30" >
+
+                <Button  Width="40" Height="40" Padding="0" Style="{StaticResource MaterialDesignOutlinedButton}" BorderThickness="0" Margin="5">
+                    <Button.Content>
+                        <mat:PackIcon Kind="Facebook" Width="40" Height="40" Foreground="#1877F2"/>
+                    </Button.Content>
+                </Button>
+                <Button  Width="40" Height="40" Padding="0" Style="{StaticResource MaterialDesignOutlinedButton}" BorderThickness="0" Margin="5">
+                    <Button.Content>
+                        <mat:PackIcon Kind="Twitter" Width="40" Height="40" Foreground="#1DA1F2"/>
+                    </Button.Content>
+                </Button>
+                <Button  Width="40" Height="40" Padding="0" Style="{StaticResource MaterialDesignOutlinedButton}" BorderThickness="0" Margin="5">
+                    <Button.Content>
+                        <mat:PackIcon Kind="Instagram" Width="40" Height="40" Foreground="#C13584"/>
+                    </Button.Content>
+                </Button>
+                <Button  Width="40" Height="40" Padding="0" Style="{StaticResource MaterialDesignOutlinedButton}" BorderThickness="0" Margin="5">
+                    <Button.Content>
+                        <mat:PackIcon Kind="Linkedin" Width="40" Height="40" Foreground="#0A66C2"/>
+                    </Button.Content>
+                </Button>
+                <Button  Width="40" Height="40" Padding="0" Style="{StaticResource MaterialDesignOutlinedButton}" BorderThickness="0" Margin="5">
+                    <Button.Content>
+                        <mat:PackIcon Kind="Youtube" Width="40" Height="40" Foreground="#FF0000"/>
+                    </Button.Content>
+                </Button>
+
+            </WrapPanel>
+
+
+        </Grid>
+        <TextBlock  Grid.Column="2" Grid.Row="3" FontSize="10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10"> Powered by FerDeveloper</TextBlock>
+    </Grid>
+</mah:MetroWindow>
