@@ -101,6 +101,17 @@
 
 
         </Grid>
-        <TextBlock  Grid.Column="2" Grid.Row="3" FontSize="10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10"> Powered by FerDeveloper</TextBlock>
+        <TextBlock FontSize="10"
+                   VerticalAlignment="Bottom"
+                   HorizontalAlignment="Right"
+                   Margin="10"
+                   TextWrapping="Wrap">
+            Powered by
+            <Hyperlink NavigateUri="https://github.com/CodeByFer"
+                       Foreground="#183B4E"
+                       RequestNavigate="OnHyperlinkClick">
+                CodeByFer
+            </Hyperlink>
+        </TextBlock>
     </Grid>
 </mah:MetroWindow>
