@@ -14,7 +14,7 @@ public partial class Departamento
     public int IdDepartamento { get; set; }
 
     [Column("nombre")]
-    [StringLength(100)]
+    [StringLength(50)]
     public string Nombre { get; set; } = null!;
 
     [InverseProperty("IdDepartamentoNavigation")]

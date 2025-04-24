@@ -17,6 +17,10 @@ public partial class Permiso
     [StringLength(255)]
     public string Descripcion { get; set; } = null!;
 
+    [Column("NombreControl")]
+    [StringLength(100)]
+    public string NombreControl { get; set; } = null!;
+
     [ForeignKey("IdPermiso")]
     [InverseProperty("IdPermisos")]
     public virtual ICollection<Rol> IdRols { get; set; } = new List<Rol>();

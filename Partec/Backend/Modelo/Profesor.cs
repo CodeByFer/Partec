@@ -18,15 +18,15 @@ public partial class Profesor
     public int IdProfesor { get; set; }
 
     [Column("dni")]
-    [StringLength(15)]
+    [StringLength(9)]
     public string Dni { get; set; } = null!;
 
     [Column("nombre")]
-    [StringLength(100)]
+    [StringLength(50)]
     public string Nombre { get; set; } = null!;
 
     [Column("apellidos")]
-    [StringLength(100)]
+    [StringLength(50)]
     public string Apellidos { get; set; } = null!;
 
     [Column("id_departamento")]
@@ -37,7 +37,7 @@ public partial class Profesor
     public string Email { get; set; } = null!;
 
     [Column("password")]
-    [StringLength(255)]
+    [StringLength(150)]
     public string Password { get; set; } = null!;
 
     [Column("id_rol")]

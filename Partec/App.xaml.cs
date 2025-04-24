@@ -1,6 +1,10 @@
 ﻿using System.Configuration;
 using System.Data;
 using System.Windows;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Partec.Backend.Modelo;
+using Partec.Backend.Utiles;
 
 namespace Partec
 {

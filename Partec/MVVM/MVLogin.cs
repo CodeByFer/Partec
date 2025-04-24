@@ -41,6 +41,7 @@ namespace Partec.MVVM
         }
 
 
+
         public MVLogin(GestionincidenciasContext context)
         {
             this.context = context;
@@ -50,9 +51,10 @@ namespace Partec.MVVM
 
         public async Task<Boolean> login()
         {
-            IEnumerable<Profesor> usu = await profesorServicio.FindAsync(p => p.Email == username && p.Password == password);
+            IEnumerable<Profesor> usu = await profesorServicio.FindAsync(p => p.Email.ToLower() == username.ToLower() && p.Password == password);
             if (usu.Count() > 0)
             {
+                _usuario = usu.FirstOrDefault();
                 return true;
             }
             else { return false; }

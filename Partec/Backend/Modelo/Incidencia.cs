@@ -41,11 +41,11 @@ public partial class Incidencia
     public int? IdTipoHw { get; set; }
 
     [Column("modelo")]
-    [StringLength(100)]
+    [StringLength(50)]
     public string? Modelo { get; set; }
 
     [Column("numero_serie")]
-    [StringLength(50)]
+    [StringLength(100)]
     public string? NumeroSerie { get; set; }
 
     [Column("descripcion", TypeName = "text")]

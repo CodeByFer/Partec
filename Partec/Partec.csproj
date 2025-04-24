@@ -40,9 +40,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Backend\Utiles\" />
-		<Folder Include="Frontend\Dialogos\" />
-		<Folder Include="Frontend\ControlUsuario\" />
 		<Folder Include="Resource\img\" />
 
 	</ItemGroup>

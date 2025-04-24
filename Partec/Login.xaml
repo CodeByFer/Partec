@@ -12,9 +12,10 @@
                  xmlns:mat="http://materialdesigninxaml.net/winfx/xaml/themes"
                  Title="Partec" Height="720" Width="900" MinHeight="500" MinWidth="540"
                  Foreground="#183B4E"
+                 Background="#F5EEDC"
                  FontSize="20"
                  ShowTitleBar="False"
-                 Background="#F5EEDC"
+
                  WindowStyle="None"
 
                  >
@@ -58,7 +59,7 @@
             <!--Buttons-->
             <WrapPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Button x:Name="btnLogin" Foreground="#27548A" Style="{StaticResource MaterialDesignOutlinedButton}" BorderThickness="0" Click="btnLogin_Click"
-                        >
+                        IsDefault="True">
                     <Button.Content>
                         <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" >
                             <mat:PackIcon Kind="LoginVariant" Width="20" Height="20" Padding="0"/>
@@ -76,19 +77,10 @@
                         <mat:PackIcon Kind="Facebook" Width="40" Height="40" Foreground="#1877F2"/>
                     </Button.Content>
                 </Button>
-                <Button  Width="40" Height="40" Padding="0" Style="{StaticResource MaterialDesignOutlinedButton}" BorderThickness="0" Margin="5">
-                    <Button.Content>
-                        <mat:PackIcon Kind="Twitter" Width="40" Height="40" Foreground="#1DA1F2"/>
-                    </Button.Content>
-                </Button>
+
                 <Button  Width="40" Height="40" Padding="0" Style="{StaticResource MaterialDesignOutlinedButton}" BorderThickness="0" Margin="5">
                     <Button.Content>
                         <mat:PackIcon Kind="Instagram" Width="40" Height="40" Foreground="#C13584"/>
-                    </Button.Content>
-                </Button>
-                <Button  Width="40" Height="40" Padding="0" Style="{StaticResource MaterialDesignOutlinedButton}" BorderThickness="0" Margin="5">
-                    <Button.Content>
-                        <mat:PackIcon Kind="Linkedin" Width="40" Height="40" Foreground="#0A66C2"/>
                     </Button.Content>
                 </Button>
                 <Button  Width="40" Height="40" Padding="0" Style="{StaticResource MaterialDesignOutlinedButton}" BorderThickness="0" Margin="5">

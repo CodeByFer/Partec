@@ -44,7 +44,7 @@ namespace Partec
             if (await login.login())
             {
 
-                MainWindow ventanaPrincipal = new MainWindow(context, login.usuario);
+                MainWindow ventanaPrincipal = new MainWindow(context, login);
 
                 ventanaPrincipal.Show();
                 this.Close();
