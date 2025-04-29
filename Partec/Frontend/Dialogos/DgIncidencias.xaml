@@ -7,29 +7,40 @@
     xmlns:mat="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Gestión de Incidencia"
-    Width="500"
-    Height="750"
+    Width="750"
+    Height="550"
     ResizeMode="NoResize"
     WindowStartupLocation="CenterOwner"
     WindowStyle="SingleBorderWindow"
     mc:Ignorable="d">
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <DockPanel>
+        <TextBlock
+            Margin="20"
+            HorizontalAlignment="Center"
+            DockPanel.Dock="Top"
+            FontSize="22"
+            FontWeight="Bold"
+            Text="Nueva Incidencia" />
         <Grid Margin="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <TextBlock
-                Margin="0,0,0,20"
-                HorizontalAlignment="Center"
-                FontSize="22"
-                FontWeight="Bold"
-                Text="Nueva Incidencia" />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Row="1" Margin="0,0,0,10">
+
+
+            <StackPanel
+                Grid.Row="1"
+                Grid.RowSpan="2"
+                Margin="20">
 
                 <!--  Tipo de incidencia  -->
                 <TextBlock Text="Tipo de Incidencia:" />
@@ -37,8 +48,8 @@
                     DisplayMemberPath="Descripcion"
                     ItemsSource="{Binding ListaTiposIncidencia}"
                     SelectedValue="{Binding IncidenciaSeleccionada.IdTipoIncidencia, UpdateSourceTrigger=PropertyChanged}"
-                    SelectedValuePath="IdTipoIncidencia"
-                    SelectionChanged="TipoIncidencia_Changed" />
+                    SelectedValuePath="IdTipoIncidencia" />
+                <!--  SelectionChanged="TipoIncidencia_Changed"  -->
 
                 <!--  Fecha  -->
                 <TextBlock Margin="0,10,0,0" Text="Fecha de Alta:" />
@@ -66,26 +77,48 @@
                     AcceptsReturn="True"
                     Text="{Binding IncidenciaSeleccionada.Observaciones, UpdateSourceTrigger=PropertyChanged}" />
 
-                <!--  Si es de tipo Hardware  -->
-                <StackPanel Margin="0,20,0,0" Visibility="{Binding HardwareFieldsVisibility}">
-                    <TextBlock Text="Tipo de Hardware:" />
-                    <ComboBox
-                        DisplayMemberPath="Descripcion"
-                        ItemsSource="{Binding ListaTiposHardware}"
-                        SelectedValue="{Binding IncidenciaSeleccionada.IdTipoHardware, UpdateSourceTrigger=PropertyChanged}"
-                        SelectedValuePath="IdTipoHardware" />
 
-                    <TextBlock Margin="0,10,0,0" Text="Modelo:" />
-                    <TextBox Text="{Binding IncidenciaSeleccionada.Modelo, UpdateSourceTrigger=PropertyChanged}" />
-
-                    <TextBlock Margin="0,10,0,0" Text="Número de Serie:" />
-                    <TextBox Text="{Binding IncidenciaSeleccionada.NumeroSerie, UpdateSourceTrigger=PropertyChanged}" />
-                </StackPanel>
 
             </StackPanel>
 
             <StackPanel
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="20">
+                <TextBlock Text="Documentos adicionales" />
+                <Button
+                    Width="120"
+                    Height="30"
+                    Margin="30"
+                    Click="BtnAñadirArchivo_Click"
+                    Content="Añadir archivo(s)"
+                    Style="{StaticResource MahApps.Styles.Button}" />
+                <ListBox x:Name="lstArchivos" Margin="10,50,10,10" />
+            </StackPanel>
+            <!--  Si es de tipo Hardware  -->
+            <StackPanel
                 Grid.Row="2"
+                Grid.Column="1"
+                Margin="20"
+                Visibility="{Binding HardwareFieldsVisibility}">
+                <TextBlock Text="Tipo de Hardware:" />
+                <ComboBox
+                    DisplayMemberPath="Descripcion"
+                    ItemsSource="{Binding ListaTiposHardware}"
+                    SelectedValue="{Binding IncidenciaSeleccionada.IdTipoHardware, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedValuePath="IdTipoHardware"
+                    Style="{StaticResource MahApps.Styles.ComboBox.Virtualized}" />
+
+                <TextBlock Margin="0,10,0,0" Text="Modelo:" />
+                <TextBox Text="{Binding IncidenciaSeleccionada.Modelo, UpdateSourceTrigger=PropertyChanged}" />
+
+                <TextBlock Margin="0,10,0,0" Text="Número de Serie:" />
+                <TextBox Text="{Binding IncidenciaSeleccionada.NumeroSerie, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+
+            <StackPanel
+                Grid.Row="3"
+                Grid.Column="1"
                 HorizontalAlignment="Right"
                 Orientation="Horizontal">
                 <Button
@@ -100,5 +133,5 @@
             </StackPanel>
 
         </Grid>
-    </ScrollViewer>
+    </DockPanel>
 </mah:MetroWindow>

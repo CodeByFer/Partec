@@ -8,6 +8,7 @@
     using MaterialDesignThemes.Wpf;
     using Partec.Backend.Modelo;
     using Partec.Frontend.ControlUsuario;
+    using Partec.Frontend.Dialogos;
     using Partec.MVVM;
 
     public partial class MainWindow : MetroWindow
@@ -35,6 +36,15 @@
 
         public async Task<Boolean> Initialize()
         {
+            Button btnIncidencia = new Button
+            {
+                Name = "btnIncidencia",
+                Content = "Incidencias",
+                Margin = new Thickness(10),
+                Style = (Style)Application.Current.FindResource("MaterialDesignFlatButton"),
+            };
+            btnIncidencia.Click += BotonIncidencia_Click;
+
             //TODO agregar los permisos de la base de datos con un bucle iterable
             TabItem tab = CrearTab(
                 "tbiIncidencia",
@@ -42,7 +52,8 @@
                 PackIconKind.Inbox,
                 "#FFDDA853",
                 "#183B4E",
-                new UCIncidencia()
+                null,
+                btnIncidencia
             );
             TabItem tab2 = CrearTab(
                 "tbiIncidencia",
@@ -64,7 +75,8 @@
             PackIconKind iconoHeader,
             string fondoTabHex,
             string colorTextoHex,
-            UserControl vista
+            UserControl vista,
+            Object content = null
         )
         {
             TabItem tabItem = new TabItem
@@ -108,7 +120,7 @@
             );
 
             tabItem.Header = headerPanel;
-            tabItem.Content = vista;
+            tabItem.Content = content;
             return tabItem;
         }
 
@@ -116,6 +128,8 @@
 
         private void BotonIncidencia_Click(object sender, RoutedEventArgs e)
         {
+            DgIncidencias dginci = new DgIncidencias(context);
+            dginci.Show();
             MessageBox.Show("Has hecho clic en un botón de incidencia.", "Incidencia");
         }
 
