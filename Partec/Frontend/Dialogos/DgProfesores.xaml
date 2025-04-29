@@ -1,0 +1,34 @@
+﻿<mah:MetroWindow
+    x:Class="Partec.Frontend.Dialogos.DgProfesores"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    Title="Gestión de Profesores"
+    Width="800"
+    Height="450">
+    <Grid>
+        <TextBlock
+            Margin="10"
+            FontSize="20"
+            FontWeight="Bold"
+            Text="Nuevo Profesor" />
+        <StackPanel Margin="10">
+            <TextBlock Text="DNI:" />
+            <TextBox Text="{Binding ProfesorSeleccionado.Dni}" />
+            <TextBlock Text="Nombre:" />
+            <TextBox Text="{Binding ProfesorSeleccionado.Nombre}" />
+            <TextBlock Text="Apellidos:" />
+            <TextBox Text="{Binding ProfesorSeleccionado.Apellidos}" />
+            <TextBlock Text="Email:" />
+            <TextBox Text="{Binding ProfesorSeleccionado.Email}" />
+            <TextBlock Text="Contraseña:" />
+            <TextBox Text="{Binding ProfesorSeleccionado.Password}" />
+            <TextBlock Text="Departamento:" />
+            <ComboBox ItemsSource="{Binding ListaDepartamentos}" SelectedValue="{Binding ProfesorSeleccionado.IdDepartamento}" />
+            <TextBlock Text="Rol:" />
+            <ComboBox ItemsSource="{Binding ListaRoles}" SelectedValue="{Binding ProfesorSeleccionado.IdRol}" />
+            <Button Command="{Binding GuardarCommand}" Content="Guardar" />
+            <Button Command="{Binding CancelarCommand}" Content="Cancelar" />
+        </StackPanel>
+    </Grid>
+</mah:MetroWindow>
