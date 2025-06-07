@@ -11,17 +11,49 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using Partec.MVVM;
 
 namespace Partec.Frontend.Dialogos
 {
     /// <summary>
     /// Interaction logic for DgDepartamentos.xaml
     /// </summary>
-    public partial class DgDepartamentos : Window
+    public partial class DgDepartamentos : MetroWindow
     {
-        public DgDepartamentos()
+        private MVDepartamento mvDepartamento;
+
+        public DgDepartamentos(MVDepartamento mv)
         {
+            mvDepartamento = mv;
+            DataContext = mvDepartamento;
             InitializeComponent();
+        }
+
+        private async void BtnGuardar_Click(object sender, RoutedEventArgs e)
+        {
+            if (mvDepartamento.guarda)
+            {
+                await this.ShowMessageAsync(
+                    "Gestión de Departamentos",
+                    "Departamento guardado correctamente"
+                );
+                DialogResult = true;
+            }
+            else
+            {
+                await this.ShowMessageAsync(
+                    "Gestión de Departamentos",
+                    "Error al guardar el departamento"
+                );
+            }
+        }
+
+        private void BtnCancelar_Click(object sender, RoutedEventArgs e)
+        {
+            mvDepartamento.cancelar();
+            this.Close();
         }
     }
 }

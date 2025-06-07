@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using Partec.MVVM.Base;
 
 namespace Partec.Backend.Modelo;
 
 [Table("Departamentos", Schema = "GestionIncidencias")]
-public partial class Departamento
+public partial class Departamento : PropertyChangedDataError
 {
     [Key]
     [Column("id_departamento")]

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +17,7 @@ namespace Partec.MVVM.Base
         /// evento que se activa al modificar una propiedad de la clase
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
+
         /// <summary>
         /// Manejador del evento que se activa al modificar una propiedad
         /// </summary>
@@ -32,22 +33,26 @@ namespace Partec.MVVM.Base
         #region DataErrorInfo
 
         // Mensaje del error
-        public string Error { get { return null; } }
+        public string Error
+        {
+            get { return null; }
+        }
 
         // Comprueba los errores que pueda tener una propiedad
         public string this[string columnName]
         {
             get
             {
-                var validationResults = new List<System.ComponentModel.DataAnnotations.ValidationResult>();
+                var validationResults =
+                    new List<System.ComponentModel.DataAnnotations.ValidationResult>();
 
-                if (Validator.TryValidateProperty(
-                        GetType().GetProperty(columnName).GetValue(this)
-                        , new ValidationContext(this)
-                        {
-                            MemberName = columnName
-                        }
-                        , validationResults))
+                if (
+                    Validator.TryValidateProperty(
+                        GetType().GetProperty(columnName).GetValue(this),
+                        new ValidationContext(this) { MemberName = columnName },
+                        validationResults
+                    )
+                )
                     return null;
 
                 return validationResults.First().ErrorMessage;
@@ -55,5 +60,10 @@ namespace Partec.MVVM.Base
         }
 
         #endregion
+
+        public PropertyChangedDataError Clone()
+        {
+            return MemberwiseClone() as PropertyChangedDataError;
+        }
     }
 }

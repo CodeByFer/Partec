@@ -121,23 +121,13 @@
                 mat:ColorZoneAssist.Background="#FFDDA853"
                 mat:ColorZoneAssist.Foreground="#183B4E"
                 BorderThickness="0"
-                Style="{StaticResource MaterialDesignFilledUniformTabControl}"
+                Style="{StaticResource MaterialDesignFilledTabControl}"
                 TabStripPlacement="Left" />
 
 
-            <ScrollViewer
-                Grid.Column="1"
-                mat:ScrollViewerAssist.BubbleVerticalScroll="True"
-                Style="{StaticResource MaterialDesignScrollViewer}"
-                VerticalScrollBarVisibility="Auto"
-                Visibility="Hidden">
 
 
-                <UniformGrid
-                    x:Name="CalendarioGrid"
-                    Columns="5"
-                    Visibility="Hidden" />
-            </ScrollViewer>
+
 
         </Grid>
     </DockPanel>

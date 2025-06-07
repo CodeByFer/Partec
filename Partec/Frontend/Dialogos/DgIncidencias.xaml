@@ -7,21 +7,84 @@
     xmlns:mat="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Gestión de Incidencia"
-    Width="750"
-    Height="550"
+    Width="1000"
+    Height="900"
+    Background="#F5EEDC"
+    Foreground="#183B4E"
     ResizeMode="NoResize"
+    ShowCloseButton="False"
+    ShowMaxRestoreButton="False"
+    ShowMinButton="False"
+    ShowTitleBar="False"
     WindowStartupLocation="CenterOwner"
     WindowStyle="SingleBorderWindow"
     mc:Ignorable="d">
 
-    <DockPanel>
-        <TextBlock
-            Margin="20"
-            HorizontalAlignment="Center"
-            DockPanel.Dock="Top"
-            FontSize="22"
-            FontWeight="Bold"
-            Text="Nueva Incidencia" />
+    <DockPanel Background="#F5EEDC">
+        <Grid
+            Height="35"
+            Margin="10"
+            DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <ContentControl
+                Grid.Column="0"
+                Margin="40,0,40,0"
+                HorizontalAlignment="Left"
+                Content="{StaticResource PartecSVGIcon}" />
+            <TextBlock
+                Grid.Column="1"
+                Margin="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="22"
+                FontWeight="Bold"
+                Foreground="#183B4E"
+                Text="Nueva Incidencia" />
+            <WrapPanel
+                Grid.Column="2"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <Button
+                    x:Name="minButton"
+                    Background="LightBlue"
+                    BorderThickness="0"
+                    Click="MinButton_Click"
+                    Foreground="Beige"
+                    Style="{StaticResource MaterialDesignRaisedButton}">
+                    <Button.Content>
+                        <mat:PackIcon Kind="Minimize" />
+                    </Button.Content>
+                </Button>
+                <Button
+                    x:Name="maxButton"
+                    Background="#27548A"
+                    BorderThickness="0"
+                    Click="MaxButton_Click"
+                    Foreground="Beige"
+                    Style="{StaticResource MaterialDesignRaisedButton}">
+                    <Button.Content>
+                        <mat:PackIcon Kind="Maximize" />
+                    </Button.Content>
+                </Button>
+                <Button
+                    x:Name="exitButton"
+                    Background="IndianRed"
+                    BorderThickness="0"
+                    Click="ExitButton_Click"
+                    Foreground="Beige"
+                    Style="{StaticResource MaterialDesignRaisedButton}">
+                    <Button.Content>
+                        <mat:PackIcon Kind="Close" />
+                    </Button.Content>
+                </Button>
+            </WrapPanel>
+        </Grid>
+
         <Grid Margin="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -35,85 +98,134 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-
-
             <StackPanel
                 Grid.Row="1"
                 Grid.RowSpan="2"
                 Margin="20">
+                <TextBlock Foreground="#183B4E" Text="Tipo de Incidencia:" />
+                <ComboBox ItemsSource="{Binding TiposIncidencia}" SelectedItem="{Binding TipoSeleccionado, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                <!--  Tipo de incidencia  -->
-                <TextBlock Text="Tipo de Incidencia:" />
-                <ComboBox
-                    DisplayMemberPath="Descripcion"
-                    ItemsSource="{Binding ListaTiposIncidencia}"
-                    SelectedValue="{Binding IncidenciaSeleccionada.IdTipoIncidencia, UpdateSourceTrigger=PropertyChanged}"
-                    SelectedValuePath="IdTipoIncidencia" />
-                <!--  SelectionChanged="TipoIncidencia_Changed"  -->
+                <TextBlock Margin="0,10,0,0" Text="Fecha de la incidencia:" />
+                <DatePicker SelectedDate="{Binding SelectedIncidencia.FechaIncidencia, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                <!--  Fecha  -->
-                <TextBlock Margin="0,10,0,0" Text="Fecha de Alta:" />
-                <DatePicker SelectedDate="{Binding IncidenciaSeleccionada.Fechaalta, UpdateSourceTrigger=PropertyChanged}" />
-
-                <!--  Departamento  -->
                 <TextBlock Margin="0,10,0,0" Text="Departamento:" />
                 <ComboBox
                     DisplayMemberPath="Nombre"
                     ItemsSource="{Binding ListaDepartamentos}"
-                    SelectedValue="{Binding IncidenciaSeleccionada.IdDepartamento, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedValue="{Binding SelectedIncidencia.IdDepartamento, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     SelectedValuePath="IdDepartamento" />
 
-                <!--  Descripción  -->
+                <TextBlock Margin="0,10,0,0" Text="Ubicacion:" />
+                <TextBox AcceptsReturn="True" Text="{Binding SelectedIncidencia.Ubicacion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
                 <TextBlock Margin="0,10,0,0" Text="Descripción:" />
                 <TextBox
                     Height="60"
                     AcceptsReturn="True"
-                    Text="{Binding IncidenciaSeleccionada.Descripcion, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding SelectedIncidencia.Descripcion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                <!--  Observaciones  -->
                 <TextBlock Margin="0,10,0,0" Text="Observaciones:" />
                 <TextBox
                     Height="60"
                     AcceptsReturn="True"
-                    Text="{Binding IncidenciaSeleccionada.Observaciones, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding SelectedIncidencia.Observaciones, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
+                <!--  Responsables para los permisos SOLO ADMIN Desde aqui  -->
+                <TextBlock
+                    Foreground="#183B4E"
+                    Text="Responsable:"
+                    Visibility="{Binding vsAdmin}" />
 
+                <ComboBox
+                    x:Name="cbResponsables"
+                    DisplayMemberPath="Nombre"
+                    ItemsSource="{Binding ListaResponsables}"
+                    SelectedValue="{Binding SelectedIncidencia.IdResponsable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedValuePath="IdProfesor"
+                    Visibility="{Binding vsAdmin}" />
+                <!--  Responsables para los permisos SOLO ADMIN Hasta aqui  -->
+                <!--  Responsables para los permisos Admin Responsable  -->
+                <TextBlock
+                    Margin="0,10,0,0"
+                    Text="Fecha de la Resolución:"
+                    Visibility="{Binding vsFechaResolucion}" />
+                <DatePicker SelectedDate="{Binding SelectedIncidencia.FechaResolucion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding vsFechaResolucion}" />
+                <TextBlock
+                    Margin="0,10,0,0"
+                    Text="Tiempo invertido en minutos:"
+                    Visibility="{Binding vsFechaResolucion}" />
+                <mat:NumericUpDown Visibility="{Binding vsFechaResolucion}" Value="{Binding SelectedIncidencia.TiempoInvertido, UpdateSourceTrigger=PropertyChanged}" />
 
+                <!--  Responsables para los permisos Admin Responsable  -->
             </StackPanel>
 
-            <StackPanel
-                Grid.Row="1"
-                Grid.Column="1"
-                Margin="20">
-                <TextBlock Text="Documentos adicionales" />
-                <Button
-                    Width="120"
-                    Height="30"
-                    Margin="30"
-                    Click="BtnAñadirArchivo_Click"
-                    Content="Añadir archivo(s)"
-                    Style="{StaticResource MahApps.Styles.Button}" />
-                <ListBox x:Name="lstArchivos" Margin="10,50,10,10" />
-            </StackPanel>
-            <!--  Si es de tipo Hardware  -->
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <StackPanel Margin="10">
+                    <TextBlock Text="Documentos adicionales" />
+                    <Button
+                        Width="120"
+                        Height="30"
+                        Margin="30"
+                        Click="BtnAñadirArchivo_Click"
+                        Content="Añadir archivo(s)"
+                        Style="{StaticResource MahApps.Styles.Button}" />
+                    <StackPanel VerticalAlignment="Center" Orientation="Vertical">
+                        <ListBox
+                            x:Name="lstArchivos"
+                            Height="300"
+                            Margin="10,50,10,10"
+                            Foreground="#183B4E"
+                            ItemsSource="{Binding lstArchivos}"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto"
+                            SelectedItem="{Binding ArchivoSeleccionado, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Button
+                                        x:Name="btnAbrir"
+                                        Width="Auto"
+                                        Click="BtnAbrir_Click"
+                                        Content="{Binding}" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+
+                </StackPanel>
+                <!--  Estado solo visible para los responsables y los admins  -->
+                <StackPanel Grid.Row="1">
+                    <TextBlock Text="Estado: " Visibility="{Binding vsFechaResolucion}" />
+                    <ComboBox
+                        DisplayMemberPath="DescripcionEstado"
+                        ItemsSource="{Binding ListaEstados}"
+                        SelectedValue="{Binding SelectedIncidencia.IdEstado, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        SelectedValuePath="IdEstado"
+                        Visibility="{Binding vsFechaResolucion}" />
+                </StackPanel>
+            </Grid>
+
             <StackPanel
                 Grid.Row="2"
                 Grid.Column="1"
                 Margin="20"
-                Visibility="{Binding HardwareFieldsVisibility}">
+                Visibility="{Binding HardwareFieldsVisibility, Mode=TwoWay}">
                 <TextBlock Text="Tipo de Hardware:" />
+
                 <ComboBox
                     DisplayMemberPath="Descripcion"
                     ItemsSource="{Binding ListaTiposHardware}"
-                    SelectedValue="{Binding IncidenciaSeleccionada.IdTipoHardware, UpdateSourceTrigger=PropertyChanged}"
-                    SelectedValuePath="IdTipoHardware"
+                    SelectedValue="{Binding SelectedIncidencia.IdTipoHw, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedValuePath="IdTipoHw"
                     Style="{StaticResource MahApps.Styles.ComboBox.Virtualized}" />
 
                 <TextBlock Margin="0,10,0,0" Text="Modelo:" />
-                <TextBox Text="{Binding IncidenciaSeleccionada.Modelo, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Text="{Binding SelectedIncidencia.Modelo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <TextBlock Margin="0,10,0,0" Text="Número de Serie:" />
-                <TextBox Text="{Binding IncidenciaSeleccionada.NumeroSerie, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Text="{Binding SelectedIncidencia.NumeroSerie, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
 
             <StackPanel
@@ -122,16 +234,19 @@
                 HorizontalAlignment="Right"
                 Orientation="Horizontal">
                 <Button
+                    x:Name="btnCancelar"
                     Width="90"
                     Margin="0,0,10,0"
-                    Command="{Binding CancelarCommand}"
+                    Background="#DDA853"
+                    Click="BtnCancelar_Click"
                     Content="Cancelar" />
                 <Button
+                    x:Name="btnGuardar"
                     Width="90"
-                    Command="{Binding GuardarCommand}"
+                    Background="#27548A"
+                    Click="BtnGuardar_Click"
                     Content="Guardar" />
             </StackPanel>
-
         </Grid>
     </DockPanel>
 </mah:MetroWindow>

@@ -18,44 +18,43 @@ using Partec.MVVM;
 namespace Partec.Frontend.Dialogos
 {
     /// <summary>
-    /// Interaction logic for DgRoles.xaml
+    /// Interaction logic for DgTipoHardware.xaml
     /// </summary>
-    public partial class DgRoles : MetroWindow
+    public partial class DgTipoHardware : MetroWindow
     {
-        private MVRol mv;
-        private Task inicializa;
+        private MVTiposHardware mv;
 
-        public DgRoles(MVRol mv, Task inicializa)
+        public DgTipoHardware(MVTiposHardware mvTipoHardware)
         {
             InitializeComponent();
-            this.inicializa = inicializa;
-            this.mv = mv;
-            DataContext = this.mv;
-            _ = mv.CargarPermisosParaRol();
+            mv = mvTipoHardware;
+            DataContext = mv;
         }
 
         private async void BtnGuardar_Click(object sender, RoutedEventArgs e)
         {
-            inicializa?.Wait();
             if (mv.IsValid(this))
             {
                 if (mv.guarda)
                 {
-                    await this.ShowMessageAsync("Gestión de Roles", "Rol guardado correctamente");
+                    await this.ShowMessageAsync(
+                        "Gestión de tipos de Hardware",
+                        "La incidencia a sigo agregada correctamente y se le comunicará al responsable"
+                    );
                     DialogResult = true;
                 }
                 else
                 {
                     await this.ShowMessageAsync(
-                        "Gestión de Roles",
-                        "Error interno, contacte con el administrador"
+                        "Gestión de tipos de Hardware",
+                        "Error interno, contacte con el administrados"
                     );
                 }
             }
             else
             {
                 await this.ShowMessageAsync(
-                    "Gestión de profesores",
+                    "Gestión de tipos de Hardware",
                     "Tienes campos obligatorios sin rellenar correctamente"
                 );
             }
@@ -63,7 +62,6 @@ namespace Partec.Frontend.Dialogos
 
         private void BtnCancelar_Click(object sender, RoutedEventArgs e)
         {
-            mv.CancelarRol();
             this.Close();
         }
     }

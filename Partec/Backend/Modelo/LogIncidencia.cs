@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using Partec.MVVM.Base;
 
 namespace Partec.Backend.Modelo;
 
@@ -10,7 +11,7 @@ namespace Partec.Backend.Modelo;
 [Index("IdEstado", Name = "id_estado")]
 [Index("IdIncidencia", Name = "id_incidencia")]
 [Index("IdUsuario", Name = "id_usuario")]
-public partial class LogIncidencia
+public partial class LogIncidencia : PropertyChangedDataError
 {
     [Key]
     [Column("id_log")]

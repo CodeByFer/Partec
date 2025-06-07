@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using NLog;
+using Partec.Backend.Modelo;
+using Partec.Frontend.Dialogos;
 
 namespace Partec.Backend.Servicios.Base
 {
@@ -84,7 +86,7 @@ namespace Partec.Backend.Servicios.Base
             {
                 lito = false;
                 GuardarExcepcion(ex, $"Error al actualizar entidad de tipo {typeof(T).Name}");
-                throw new Exception("Error al Actualizar");
+                throw new Exception("Error al Actualizar" + ex.Message);
             }
             return lito;
         }
@@ -132,7 +134,7 @@ namespace Partec.Backend.Servicios.Base
             }
         }
 
-        private void GuardarExcepcion(Exception ex, string mensaje)
+        public void GuardarExcepcion(Exception ex, string mensaje)
         {
             logger.Error(mensaje + "\n" + ex.InnerException);
             logger.Error(ex.Message);

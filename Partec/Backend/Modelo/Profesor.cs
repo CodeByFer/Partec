@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using Partec.MVVM.Base;
 
 namespace Partec.Backend.Modelo;
 
@@ -11,7 +12,7 @@ namespace Partec.Backend.Modelo;
 [Index("Email", Name = "email", IsUnique = true)]
 [Index("IdDepartamento", Name = "id_departamento")]
 [Index("IdRol", Name = "id_rol")]
-public partial class Profesor
+public partial class Profesor : PropertyChangedDataError
 {
     [Key]
     [Column("id_profesor")]
@@ -52,11 +53,14 @@ public partial class Profesor
     public virtual Rol IdRolNavigation { get; set; } = null!;
 
     [InverseProperty("IdProfesorNavigation")]
-    public virtual ICollection<Incidencia> IncidenciaIdProfesorNavigations { get; set; } = new List<Incidencia>();
+    public virtual ICollection<Incidencia> IncidenciaIdProfesorNavigations { get; set; } =
+        new List<Incidencia>();
 
     [InverseProperty("IdResponsableNavigation")]
-    public virtual ICollection<Incidencia> IncidenciaIdResponsableNavigations { get; set; } = new List<Incidencia>();
+    public virtual ICollection<Incidencia> IncidenciaIdResponsableNavigations { get; set; } =
+        new List<Incidencia>();
 
     [InverseProperty("IdUsuarioNavigation")]
-    public virtual ICollection<LogIncidencia> LogIncidencia { get; set; } = new List<LogIncidencia>();
+    public virtual ICollection<LogIncidencia> LogIncidencia { get; set; } =
+        new List<LogIncidencia>();
 }

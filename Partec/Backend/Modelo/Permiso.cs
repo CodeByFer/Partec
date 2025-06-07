@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using Partec.MVVM.Base;
 
 namespace Partec.Backend.Modelo;
 
 [Table("Permisos", Schema = "GestionIncidencias")]
-public partial class Permiso
+public partial class Permiso : PropertyChangedDataError
 {
     [Key]
     [Column("id_permiso")]
@@ -24,4 +25,12 @@ public partial class Permiso
     [ForeignKey("IdPermiso")]
     [InverseProperty("IdPermisos")]
     public virtual ICollection<Rol> IdRols { get; set; } = new List<Rol>();
+
+    [NotMapped]
+    public bool Asignado
+    {
+        get => _asignado;
+        set { _asignado = value; } // Usas PropertyChangedDataError
+    }
+    private bool _asignado;
 }

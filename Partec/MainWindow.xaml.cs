@@ -7,6 +7,7 @@
     using MahApps.Metro.Controls;
     using MaterialDesignThemes.Wpf;
     using Partec.Backend.Modelo;
+    using Partec.Backend.Servicios;
     using Partec.Frontend.ControlUsuario;
     using Partec.Frontend.Dialogos;
     using Partec.MVVM;
@@ -14,11 +15,20 @@
     public partial class MainWindow : MetroWindow
     {
         private GestionincidenciasContext context;
-
+        private MVIncidencia mvIncidencia;
+        private MVTiposHardware mvTiposHardware;
+        private MVDepartamento mvDepartamento;
+        private MVRol MVRol;
         public MVLogin mvLogin { get; set; }
 
-        private Dictionary<DateTime, List<string>> incidencias =
-            new Dictionary<DateTime, List<string>>();
+        // Guarda la tarea
+        private Task inicializacionRolTask;
+        private Task inicializacionIncidenciaTask;
+        private Task inicializacionHardwareTask;
+        private Task inicializacionProfesorTask;
+        private Task inicializacionDepartamentoTask;
+        private List<String> permisos;
+        EmailHelper emailHelper;
 
         public MainWindow(GestionincidenciasContext context, MVLogin mvLogin)
         {
@@ -26,47 +36,146 @@
             this.context = context;
             this.mvLogin = mvLogin;
             this.DataContext = this.mvLogin;
-            _ = Initialize();
+            Initialize();
+            this.emailHelper = new EmailHelper(context);
+            Eventos.RolModificado += Initialize;
         }
 
-        public MainWindow()
+        public async void Initialize()
         {
-            InitializeComponent();
-        }
+            tbcMain.Items.Clear();
 
-        public async Task<Boolean> Initialize()
-        {
-            Button btnIncidencia = new Button
+            permisos = mvLogin
+                .usuario.IdRolNavigation.IdPermisos.Select(p => p.NombreControl)
+                .ToList();
+
+            if (permisos.Contains("incidencia_admin"))
             {
-                Name = "btnIncidencia",
-                Content = "Incidencias",
-                Margin = new Thickness(10),
-                Style = (Style)Application.Current.FindResource("MaterialDesignFlatButton"),
-            };
-            btnIncidencia.Click += BotonIncidencia_Click;
-
-            //TODO agregar los permisos de la base de datos con un bucle iterable
-            TabItem tab = CrearTab(
-                "tbiIncidencia",
-                "Incidencia",
-                PackIconKind.Inbox,
-                "#FFDDA853",
-                "#183B4E",
-                null,
-                btnIncidencia
-            );
-            TabItem tab2 = CrearTab(
-                "tbiIncidencia",
-                "Incidencia",
-                PackIconKind.Inbox,
-                "#FFDDA853",
-                "#183B4E",
-                new UCIncidencia()
-            );
-            tbcMain.Items.Add(tab);
-            tbcMain.Items.Add(tab2);
-
-            return true;
+                //Control sobre incidencias
+                mvIncidencia = new MVIncidencia(
+                    new GestionincidenciasContext(),
+                    mvLogin.usuario,
+                    admin: true
+                );
+                this.inicializacionIncidenciaTask = mvIncidencia.inicializa();
+                TabItem tbiIncidenciaManejo = CrearTab(
+                    "tbiIncidencia",
+                    "Manejo de incidencias",
+                    PackIconKind.Inbox,
+                    "#FFDDA853",
+                    "#183B4E",
+                    new UCIncidencia(mvIncidencia, inicializacionIncidenciaTask)
+                );
+                tbcMain.Items.Add(tbiIncidenciaManejo);
+            }
+            else if (permisos.Contains("incidencia_responsable"))
+            {
+                //TODO Agregar el true para las cosas
+                mvIncidencia = new MVIncidencia(
+                    new GestionincidenciasContext(),
+                    mvLogin.usuario,
+                    admin: false,
+                    responsable: true
+                );
+                this.inicializacionIncidenciaTask = mvIncidencia.inicializa();
+                TabItem tbiIncidenciaManejo = CrearTab(
+                    "tbiIncidencia",
+                    "Manejo de incidencias",
+                    PackIconKind.Inbox,
+                    "#FFDDA853",
+                    "#183B4E",
+                    new UCIncidencia(mvIncidencia, inicializacionIncidenciaTask)
+                );
+                tbcMain.Items.Add(tbiIncidenciaManejo);
+            }
+            else if (permisos.Contains("incidencia_edit_own"))
+            {
+                //TODO Agregar el true para las cosas
+                mvIncidencia = new MVIncidencia(
+                    new GestionincidenciasContext(),
+                    mvLogin.usuario,
+                    admin: false
+                );
+                this.inicializacionIncidenciaTask = mvIncidencia.inicializa();
+                TabItem tbiIncidenciaManejo = CrearTab(
+                    "tbiIncidencia",
+                    "Manejo de incidencias",
+                    PackIconKind.Inbox,
+                    "#FFDDA853",
+                    "#183B4E",
+                    new UCIncidencia(mvIncidencia, inicializacionIncidenciaTask)
+                );
+                tbcMain.Items.Add(tbiIncidenciaManejo);
+            }
+            if (permisos.Contains("usuario_crud"))
+            {
+                this.inicializacionProfesorTask = mvLogin.Inicializa();
+                TabItem tbProfesor = CrearTab(
+                    "tbProfesor",
+                    "Manejo de Profesor",
+                    PackIconKind.Account,
+                    "#FFDDA853",
+                    "#183B4E",
+                    new UCProfesor(mvLogin, inicializacionProfesorTask)
+                );
+                tbcMain.Items.Add(tbProfesor);
+            }
+            if (permisos.Contains("departamento_admin"))
+            {
+                mvDepartamento = new MVDepartamento(new GestionincidenciasContext());
+                this.inicializacionDepartamentoTask = mvDepartamento.Inicializa();
+                TabItem tbDepartamento = CrearTab(
+                    "tbDepartamento",
+                    "Gestión de Departamentos",
+                    PackIconKind.BriefcaseAccount,
+                    "#FFDDA853",
+                    "#183B4E",
+                    new UCDepartamento(mvDepartamento, inicializacionDepartamentoTask)
+                );
+                tbcMain.Items.Add(tbDepartamento);
+            }
+            if (permisos.Contains("tipohw_manage"))
+            {
+                mvTiposHardware = new MVTiposHardware(new GestionincidenciasContext());
+                this.inicializacionHardwareTask = mvTiposHardware.inicializa();
+                TabItem tbTipoHardware = CrearTab(
+                    "tbTipoHardware",
+                    "Tipo Hardware",
+                    PackIconKind.Harddisk,
+                    "#FFDDA853",
+                    "#183B4E",
+                    new UCHardware(mvTiposHardware, inicializacionHardwareTask)
+                );
+                tbcMain.Items.Add(tbTipoHardware);
+            }
+            if (permisos.Contains("roles_permisos_manage"))
+            {
+                MVRol = new MVRol(new GestionincidenciasContext());
+                this.inicializacionRolTask = MVRol.inicializa();
+                TabItem tbRol = CrearTab(
+                    "tbRol",
+                    "Gestión de Roles",
+                    PackIconKind.Security,
+                    "#FFDDA853",
+                    "#183B4E",
+                    new UCRol(MVRol, inicializacionRolTask)
+                );
+                tbcMain.Items.Add(tbRol);
+            }
+            if (permisos.Contains("informes_view"))
+            {
+                var vmGraficas = new MVGraficas(new GestionincidenciasContext());
+                var ucGraficas = new UCGraficas(vmGraficas);
+                TabItem tbGraficas = CrearTab(
+                    "tbGraficas",
+                    "Gráficos",
+                    PackIconKind.ChartBar,
+                    "#FFDDA853",
+                    "#183B4E",
+                    ucGraficas
+                );
+                tbcMain.Items.Add(tbGraficas);
+            }
         }
 
         private TabItem CrearTab(
@@ -90,6 +199,7 @@
                     (Color)ColorConverter.ConvertFromString(colorTextoHex)
                 ),
                 Style = (Style)Application.Current.FindResource("MaterialDesignTabItem"),
+                HorizontalAlignment = HorizontalAlignment.Left,
             };
 
             WrapPanel headerPanel = new WrapPanel
@@ -120,17 +230,25 @@
             );
 
             tabItem.Header = headerPanel;
-            tabItem.Content = content;
+            if (content == null)
+            {
+                tabItem.Content = vista;
+            }
+            else
+            {
+                tabItem.Content = content;
+            }
             return tabItem;
         }
 
         //Zona de Clicks, aquí se pondrán todos
 
-        private void BotonIncidencia_Click(object sender, RoutedEventArgs e)
+
+
+        private void BotonHardware_Click(object sender, RoutedEventArgs e)
         {
-            DgIncidencias dginci = new DgIncidencias(context);
-            dginci.Show();
-            MessageBox.Show("Has hecho clic en un botón de incidencia.", "Incidencia");
+            DgTipoHardware dginci = new DgTipoHardware(mvTiposHardware);
+            dginci.ShowDialog();
         }
 
         private void minButton_Click(object sender, RoutedEventArgs e)
@@ -152,6 +270,14 @@
         }
 
         private void logoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            mvLogin = null;
+            (new Login()).Show();
+
+            this.Close();
+        }
+
+        private void cambiarContrasenya_Click(object sender, RoutedEventArgs e)
         {
             mvLogin = null;
             (new Login()).Show();

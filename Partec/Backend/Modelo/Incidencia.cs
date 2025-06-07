@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using Partec.MVVM.Base;
 
 namespace Partec.Backend.Modelo;
 
@@ -12,23 +13,24 @@ namespace Partec.Backend.Modelo;
 [Index("IdProfesor", Name = "id_profesor")]
 [Index("IdResponsable", Name = "id_responsable")]
 [Index("IdTipoHw", Name = "id_tipo_hw")]
-public partial class Incidencia
+public partial class Incidencia : PropertyChangedDataError
 {
     [Key]
     [Column("id_incidencia")]
-    public int IdIncidencia { get; set; }
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int IdIncidencia { get; set; } = 0;
 
     [Column("tipo_incidencia", TypeName = "enum('HW','SW')")]
-    public string TipoIncidencia { get; set; } = null!;
+    public string TipoIncidencia { get; set; } = "HW";
 
     [Column("fecha_incidencia", TypeName = "datetime")]
-    public DateTime FechaIncidencia { get; set; }
+    public DateTime FechaIncidencia { get; set; } = DateTime.Now;
 
     [Column("fecha_introduccion", TypeName = "datetime")]
-    public DateTime FechaIntroduccion { get; set; }
+    public DateTime FechaIntroduccion { get; set; } = DateTime.Now;
 
     [Column("id_profesor")]
-    public int IdProfesor { get; set; }
+    public int IdProfesor { get; set; } = -1;
 
     [Column("id_departamento")]
     public int IdDepartamento { get; set; }
@@ -55,7 +57,7 @@ public partial class Incidencia
     public string? Observaciones { get; set; }
 
     [Column("id_estado")]
-    public int IdEstado { get; set; }
+    public int IdEstado { get; set; } = 4;
 
     [Column("id_responsable")]
     public int? IdResponsable { get; set; }
@@ -64,7 +66,7 @@ public partial class Incidencia
     public DateTime? FechaResolucion { get; set; }
 
     [Column("tiempo_invertido")]
-    public int? TiempoInvertido { get; set; }
+    public int? TiempoInvertido { get; set; } = 0;
 
     [InverseProperty("IdIncidenciaNavigation")]
     public virtual ICollection<Archivo> Archivos { get; set; } = new List<Archivo>();
@@ -90,5 +92,14 @@ public partial class Incidencia
     public virtual TipoHardware? IdTipoHwNavigation { get; set; }
 
     [InverseProperty("IdIncidenciaNavigation")]
-    public virtual ICollection<LogIncidencia> LogIncidencia { get; set; } = new List<LogIncidencia>();
+    public virtual ICollection<LogIncidencia> LogIncidencia { get; set; } =
+        new List<LogIncidencia>();
+
+    [NotMapped]
+    public Profesor ProfesorAntiguo
+    {
+        get => _ProfesorAntiguo;
+        set { _ProfesorAntiguo = value; } // Usas PropertyChangedDataError
+    }
+    private Profesor _ProfesorAntiguo;
 }

@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="Partec.Frontend.ControlUsuario.UCHardware"
+    x:Class="Partec.Frontend.ControlUsuario.UCProfesor"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -13,6 +13,7 @@
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -21,9 +22,14 @@
             FontSize="22"
             FontWeight="Bold"
             Foreground="#183B4E"
-            Text="Gestión de Tipos de Hardware" />
+            Text="Gestión de Profesores" />
+
+
+
+        <!--  DataGrid de Profesores  -->
         <DataGrid
-            Grid.Row="1"
+            x:Name="dgProfesor"
+            Grid.Row="2"
             Margin="10"
             AutoGenerateColumns="False"
             Background="#DDA853"
@@ -32,19 +38,17 @@
             ColumnWidth="*"
             Foreground="#183B4E"
             IsReadOnly="True"
-            ItemsSource="{Binding ListaTiposHardware}"
-            SelectedItem="{Binding SelectedTipoHardware, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            ItemsSource="{Binding ListaProfesores}"
+            SelectedItem="{Binding SelectedProfesor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             SelectionMode="Single">
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">
                     <Setter Property="Background" Value="#DDA853" />
                     <Setter Property="Foreground" Value="#183B4E" />
                     <Setter Property="VerticalAlignment" Value="Center" />
-
-
+                    <Setter Property="HorizontalAlignment" Value="Center" />
                 </Style>
             </DataGrid.ColumnHeaderStyle>
-
             <DataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem
@@ -66,29 +70,54 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
             <DataGrid.Columns>
-
                 <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding Descripcion}"
-                    Header="Descripción" />
+                    Width="auto"
+                    MinWidth="20"
+                    Binding="{Binding Dni}"
+                    Header="DNI" />
+                <DataGridTextColumn
+                    Width="auto"
+                    MinWidth="20"
+                    Binding="{Binding Nombre}"
+                    Header="Nombre" />
+                <DataGridTextColumn
+                    Width="auto"
+                    MinWidth="20"
+                    Binding="{Binding Apellidos}"
+                    Header="Apellidos" />
+                <DataGridTextColumn
+                    Width="auto"
+                    MinWidth="20"
+                    Binding="{Binding Email}"
+                    Header="Email" />
+                <DataGridTextColumn
+                    Width="auto"
+                    MinWidth="20"
+                    Binding="{Binding IdDepartamentoNavigation.Nombre}"
+                    Header="Departamento" />
+                <DataGridTextColumn
+                    Width="auto"
+                    MinWidth="20"
+                    Binding="{Binding IdRolNavigation.NombreRol}"
+                    Header="Rol" />
             </DataGrid.Columns>
         </DataGrid>
+
+        <!--  Botón Nueva Profesor  -->
         <StackPanel
-            Grid.Row="2"
+            Grid.Row="3"
             Margin="0,10,0,0"
             HorizontalAlignment="Right"
             Orientation="Horizontal">
             <Button
-                x:Name="btnNuevoHardware"
-                Width="100"
+                x:Name="btnNuevoProfesor"
+                Width="140"
                 Margin="0,0,10,0"
-                Background="#DDA853"
-                Click="BtnNuevoHardware_Click"
-                Content="Nuevo"
-                Foreground="#183B4E"
+                Background="#27548A"
+                Click="BtnNuevoProfesor_Click"
+                Content="Nuevo Profesor"
+                Foreground="#F5EEDC"
                 Style="{StaticResource MahApps.Styles.Button}" />
-
-
         </StackPanel>
     </Grid>
 </UserControl>

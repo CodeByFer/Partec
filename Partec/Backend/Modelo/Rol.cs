@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using Partec.MVVM.Base;
 
 namespace Partec.Backend.Modelo;
 
 [Table("Roles", Schema = "GestionIncidencias")]
-public partial class Rol
+public partial class Rol : PropertyChangedDataError
 {
     [Key]
     [Column("id_rol")]

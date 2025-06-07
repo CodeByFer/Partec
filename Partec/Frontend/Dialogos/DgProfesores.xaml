@@ -2,33 +2,167 @@
     x:Class="Partec.Frontend.Dialogos.DgProfesores"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-    Title="Gestión de Profesores"
-    Width="800"
-    Height="450">
-    <Grid>
-        <TextBlock
+    xmlns:mat="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Gestión de Profesor"
+    Width="750"
+    Height="550"
+    Background="#F5EEDC"
+    Foreground="#183B4E"
+    ResizeMode="NoResize"
+    ShowCloseButton="False"
+    ShowMaxRestoreButton="False"
+    ShowMinButton="False"
+    ShowTitleBar="False"
+    WindowStartupLocation="CenterOwner"
+    WindowStyle="SingleBorderWindow"
+    mc:Ignorable="d">
+
+    <DockPanel Background="#F5EEDC">
+        <!--  Header  -->
+        <Grid
+            Height="35"
             Margin="10"
-            FontSize="20"
-            FontWeight="Bold"
-            Text="Nuevo Profesor" />
-        <StackPanel Margin="10">
-            <TextBlock Text="DNI:" />
-            <TextBox Text="{Binding ProfesorSeleccionado.Dni}" />
-            <TextBlock Text="Nombre:" />
-            <TextBox Text="{Binding ProfesorSeleccionado.Nombre}" />
-            <TextBlock Text="Apellidos:" />
-            <TextBox Text="{Binding ProfesorSeleccionado.Apellidos}" />
-            <TextBlock Text="Email:" />
-            <TextBox Text="{Binding ProfesorSeleccionado.Email}" />
-            <TextBlock Text="Contraseña:" />
-            <TextBox Text="{Binding ProfesorSeleccionado.Password}" />
-            <TextBlock Text="Departamento:" />
-            <ComboBox ItemsSource="{Binding ListaDepartamentos}" SelectedValue="{Binding ProfesorSeleccionado.IdDepartamento}" />
-            <TextBlock Text="Rol:" />
-            <ComboBox ItemsSource="{Binding ListaRoles}" SelectedValue="{Binding ProfesorSeleccionado.IdRol}" />
-            <Button Command="{Binding GuardarCommand}" Content="Guardar" />
-            <Button Command="{Binding CancelarCommand}" Content="Cancelar" />
-        </StackPanel>
-    </Grid>
+            DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <ContentControl
+                Grid.Column="0"
+                Margin="40,0,40,0"
+                HorizontalAlignment="Left"
+                Content="{StaticResource PartecSVGIcon}" />
+            <TextBlock
+                Grid.Column="1"
+                Margin="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="22"
+                FontWeight="Bold"
+                Foreground="#183B4E"
+                Text="Nuevo Profesor" />
+            <WrapPanel
+                Grid.Column="2"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <Button
+                    x:Name="minButton"
+                    Background="LightBlue"
+                    BorderThickness="0"
+                    Click="MinButton_Click"
+                    Foreground="Beige"
+                    Style="{StaticResource MaterialDesignRaisedButton}">
+                    <Button.Content>
+                        <mat:PackIcon Kind="Minimize" />
+                    </Button.Content>
+                </Button>
+                <Button
+                    x:Name="maxButton"
+                    Background="#27548A"
+                    BorderThickness="0"
+                    Click="MaxButton_Click"
+                    Foreground="Beige"
+                    Style="{StaticResource MaterialDesignRaisedButton}">
+                    <Button.Content>
+                        <mat:PackIcon Kind="Maximize" />
+                    </Button.Content>
+                </Button>
+                <Button
+                    x:Name="exitButton"
+                    Background="IndianRed"
+                    BorderThickness="0"
+                    Click="ExitButton_Click"
+                    Foreground="Beige"
+                    Style="{StaticResource MaterialDesignRaisedButton}">
+                    <Button.Content>
+                        <mat:PackIcon Kind="Close" />
+                    </Button.Content>
+                </Button>
+            </WrapPanel>
+        </Grid>
+
+        <!--  Main Form  -->
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="20">
+                <TextBlock Foreground="#183B4E" Text="DNI:" />
+                <TextBox Text="{Binding SelectedProfesor.Dni, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <TextBlock Margin="0,10,0,0" Text="Nombre:" />
+                <TextBox Text="{Binding SelectedProfesor.Nombre, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <TextBlock Margin="0,10,0,0" Text="Apellidos:" />
+                <TextBox Text="{Binding SelectedProfesor.Apellidos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <TextBlock Margin="0,10,0,0" Text="Email:" />
+                <TextBox Text="{Binding SelectedProfesor.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <TextBlock Margin="0,10,0,0" Text="Contraseña:" />
+
+                <PasswordBox
+                    Padding="0"
+                    mat:HintAssist.Hint="Contraseña"
+                    mat:PasswordBoxAssist.Password="{Binding SelectedProfesor.Password, UpdateSourceTrigger=PropertyChanged}"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Foreground="#183B4E"
+                    Style="{StaticResource MaterialDesignRevealPasswordBox}" />
+            </StackPanel>
+
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="20">
+                <TextBlock Margin="0,0,0,0" Text="Departamento:" />
+                <ComboBox
+                    DisplayMemberPath="Nombre"
+                    ItemsSource="{Binding ListaDepartamentos}"
+                    SelectedValue="{Binding SelectedProfesor.IdDepartamento, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedValuePath="IdDepartamento" />
+
+                <TextBlock Margin="0,10,0,0" Text="Rol:" />
+                <ComboBox
+                    DisplayMemberPath="NombreRol"
+                    ItemsSource="{Binding ListaRoles}"
+                    SelectedValue="{Binding SelectedProfesor.IdRol, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedValuePath="IdRol" />
+            </StackPanel>
+
+            <StackPanel
+                Grid.Row="2"
+                Grid.Column="1"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <Button
+                    x:Name="btnCancelar"
+                    Width="90"
+                    Margin="0,0,10,0"
+                    Background="#DDA853"
+                    Click="BtnCancelar_Click"
+                    Content="Cancelar" />
+                <Button
+                    x:Name="btnGuardar"
+                    Width="90"
+                    Background="#27548A"
+                    Click="BtnGuardar_Click"
+                    Content="Guardar" />
+            </StackPanel>
+        </Grid>
+    </DockPanel>
 </mah:MetroWindow>

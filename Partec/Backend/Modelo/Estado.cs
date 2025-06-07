@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using Partec.MVVM.Base;
 
 namespace Partec.Backend.Modelo;
 
 [Table("Estados", Schema = "GestionIncidencias")]
-public partial class Estado
+public partial class Estado : PropertyChangedDataError
 {
     [Key]
     [Column("id_estado")]
@@ -21,5 +22,6 @@ public partial class Estado
     public virtual ICollection<Incidencia> Incidencia { get; set; } = new List<Incidencia>();
 
     [InverseProperty("IdEstadoNavigation")]
-    public virtual ICollection<LogIncidencia> LogIncidencia { get; set; } = new List<LogIncidencia>();
+    public virtual ICollection<LogIncidencia> LogIncidencia { get; set; } =
+        new List<LogIncidencia>();
 }
