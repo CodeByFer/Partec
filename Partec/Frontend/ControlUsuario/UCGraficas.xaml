@@ -91,14 +91,18 @@
                 x:Name="btnRefresh"
                 Width="auto"
                 Margin="20"
+                Background="#27548A"
                 Click="BtnRefresh_Click"
-                Content="Refrescar Graficos" />
+                Content="Refrescar Graficos"
+                Foreground="#F5EEDC" />
             <Button
                 x:Name="btnImprimir"
                 Width="auto"
                 Margin="20"
+                Background="#27548A"
                 Click="BtnImprimir_Click"
-                Content="Imprimir Graficos" />
+                Content="Imprimir Graficos"
+                Foreground="#F5EEDC" />
         </StackPanel>
         <!--  LabelsRotation="45"  -->
 

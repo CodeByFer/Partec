@@ -37,7 +37,7 @@
             this.mvLogin = mvLogin;
             this.DataContext = this.mvLogin;
             Initialize();
-            this.emailHelper = new EmailHelper(context);
+            this.emailHelper = new EmailHelper(new GestionincidenciasContext());
             Eventos.RolModificado += Initialize;
         }
 
@@ -90,11 +90,11 @@
             }
             else if (permisos.Contains("incidencia_edit_own"))
             {
-                //TODO Agregar el true para las cosas
                 mvIncidencia = new MVIncidencia(
                     new GestionincidenciasContext(),
                     mvLogin.usuario,
-                    admin: false
+                    admin: false,
+                    responsable: false
                 );
                 this.inicializacionIncidenciaTask = mvIncidencia.inicializa();
                 TabItem tbiIncidenciaManejo = CrearTab(

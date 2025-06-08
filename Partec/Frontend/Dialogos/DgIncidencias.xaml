@@ -97,34 +97,55 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-
+            <TextBlock
+                Grid.Row="3"
+                FontWeight="Bold"
+                Text="Todos los campos con * son obligatorios" />
             <StackPanel
                 Grid.Row="1"
                 Grid.RowSpan="2"
                 Margin="20">
-                <TextBlock Foreground="#183B4E" Text="Tipo de Incidencia:" />
+                <TextBlock
+                    FontWeight="Bold"
+                    Foreground="#183B4E"
+                    Text="Tipo de Incidencia:*" />
                 <ComboBox ItemsSource="{Binding TiposIncidencia}" SelectedItem="{Binding TipoSeleccionado, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                <TextBlock Margin="0,10,0,0" Text="Fecha de la incidencia:" />
+                <TextBlock
+                    Margin="0,10,0,0"
+                    FontWeight="Bold"
+                    Text="Fecha de la incidencia:*" />
                 <DatePicker SelectedDate="{Binding SelectedIncidencia.FechaIncidencia, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                <TextBlock Margin="0,10,0,0" Text="Departamento:" />
+                <TextBlock
+                    Margin="0,10,0,0"
+                    FontWeight="Bold"
+                    Text="Departamento:*" />
                 <ComboBox
                     DisplayMemberPath="Nombre"
                     ItemsSource="{Binding ListaDepartamentos}"
                     SelectedValue="{Binding SelectedIncidencia.IdDepartamento, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     SelectedValuePath="IdDepartamento" />
 
-                <TextBlock Margin="0,10,0,0" Text="Ubicacion:" />
+                <TextBlock
+                    Margin="0,10,0,0"
+                    FontWeight="Bold"
+                    Text="Ubicacion:*" />
                 <TextBox AcceptsReturn="True" Text="{Binding SelectedIncidencia.Ubicacion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                <TextBlock Margin="0,10,0,0" Text="Descripción:" />
+                <TextBlock
+                    Margin="0,10,0,0"
+                    FontWeight="Bold"
+                    Text="Descripción:*" />
                 <TextBox
                     Height="60"
                     AcceptsReturn="True"
                     Text="{Binding SelectedIncidencia.Descripcion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                <TextBlock Margin="0,10,0,0" Text="Observaciones:" />
+                <TextBlock
+                    Margin="0,10,0,0"
+                    FontWeight="Bold"
+                    Text="Observaciones:*" />
                 <TextBox
                     Height="60"
                     AcceptsReturn="True"
@@ -170,7 +191,7 @@
                         Width="120"
                         Height="30"
                         Margin="30"
-                        Click="BtnAñadirArchivo_Click"
+                        Click="BtnAnadirArchivo_Click"
                         Content="Añadir archivo(s)"
                         Style="{StaticResource MahApps.Styles.Button}" />
                     <StackPanel VerticalAlignment="Center" Orientation="Vertical">

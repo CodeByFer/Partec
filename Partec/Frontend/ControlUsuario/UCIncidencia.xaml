@@ -91,8 +91,10 @@
             <Button
                 x:Name="btnLimpiarFiltro"
                 Margin="10,0,0,0"
+                Background="#27548A"
                 Click="BtnLimpiarFiltro_Click"
-                Content="Limpiar" />
+                Content="Limpiar"
+                Foreground="#F5EEDC" />
         </StackPanel>
         <DataGrid
             x:Name="dgIncidencia"
@@ -114,9 +116,9 @@
                     <Setter Property="Foreground" Value="#183B4E" />
                     <Setter Property="VerticalAlignment" Value="Center" />
                     <Setter Property="HorizontalAlignment" Value="Center" />
-
                 </Style>
             </DataGrid.ColumnHeaderStyle>
+
             <DataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem

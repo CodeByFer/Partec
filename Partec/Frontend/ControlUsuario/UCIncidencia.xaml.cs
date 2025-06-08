@@ -38,6 +38,7 @@ namespace Partec.Frontend.ControlUsuario
         private async void BtnNuevaIncidencia_Click(object sender, RoutedEventArgs e)
         {
             await inicializacionIncidenciaTask;
+            mvIncidencia.SelectedIncidencia = new Incidencia();
             DgIncidencias dginci = new DgIncidencias(
                 mvIncidencia,
                 inicioMv: inicializacionIncidenciaTask

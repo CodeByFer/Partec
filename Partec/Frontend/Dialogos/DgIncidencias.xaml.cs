@@ -58,7 +58,7 @@ namespace Partec.Frontend.Dialogos
             this.DataContext = mv;
         }
 
-        private void BtnAñadirArchivo_Click(object sender, RoutedEventArgs e)
+        private void BtnAnadirArchivo_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
@@ -80,7 +80,10 @@ namespace Partec.Frontend.Dialogos
                     rutasSeleccionadas.ToList()
                 );
 
-                mv.ListaArchivosAuxiliar.AddRange(nuevosArchivos);
+                for (int i = 0; i < nuevosArchivos.Count; i++)
+                {
+                    mv.ListaArchivosAuxiliar.Add(nuevosArchivos[i]);
+                }
 
                 // Mostrar nombres en la lista visual (no hay que mostrar aún los copiados físicamente)
                 if (mv.lstArchivos == null)

@@ -28,6 +28,7 @@ namespace Partec
     {
         GestionincidenciasContext context;
         MVLogin login;
+
         public Login()
         {
             if (ConectarBD())
@@ -43,7 +44,6 @@ namespace Partec
         {
             if (await login.login())
             {
-
                 MainWindow ventanaPrincipal = new MainWindow(context, login);
 
                 ventanaPrincipal.Show();
@@ -51,7 +51,10 @@ namespace Partec
             }
             else
             {
-                _ = this.ShowMessageAsync("INICIO DE SESIÓN", "El usuario y/o contraseña son incorrectos " + login.username + " " + login.password + " a");
+                _ = this.ShowMessageAsync(
+                    "INICIO DE SESIÓN",
+                    "El usuario y/o contraseña son incorrectos"
+                );
             }
         }
 
@@ -66,8 +69,10 @@ namespace Partec
             catch (Exception ex)
             {
                 correcto = false;
-                this.ShowMessageAsync("CONEXIÓN DE LA BASE DE DATOS",
-                    "Upps!!! No podemos conectar con la BD. Contacte con el administrador");
+                this.ShowMessageAsync(
+                    "CONEXIÓN DE LA BASE DE DATOS",
+                    "Upps!!! No podemos conectar con la BD. Contacte con el administrador"
+                );
             }
             return correcto;
         }

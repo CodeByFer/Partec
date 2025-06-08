@@ -12,12 +12,24 @@ namespace Partec.Backend.Servicios
     {
         private GestionincidenciasContext contexto;
 
-        public ArchivoServicio(GestionincidenciasContext context) : base(context) 
+        public ArchivoServicio(GestionincidenciasContext context)
+            : base(context)
         {
             this.contexto = context;
         }
-     
 
-        
+        public Task<Boolean> DeleteAllAsync(List<Archivo> archivos)
+        {
+            try
+            {
+                contexto.Archivos.RemoveRange(archivos);
+                return Task.FromResult(contexto.SaveChanges() > 0);
+            }
+            catch (Exception ex)
+            {
+                GuardarExcepcion(ex, "Error al eliminar todos los archivos");
+                throw new Exception("Error BD Eliminación de Archivos");
+            }
+        }
     }
 }

@@ -158,7 +158,7 @@ namespace Partec
                 SmtpClient clienteSmtp = new SmtpClient("smtp.gmail.com", 587);
                 clienteSmtp.Credentials = new NetworkCredential(
                     "partecincidencias@gmail.com",
-                    "" //AQUI VA LA CONTRASEÑA DE LA CUENTA DE GMAIL
+                    "qctq gjwo tiit xhwi" //AQUI VA LA CONTRASEÑA DE LA CUENTA DE GMAIL
                 );
                 clienteSmtp.EnableSsl = true;
 
@@ -246,9 +246,18 @@ namespace Partec
             AgregarLinea("Ubicación", incidencia.Ubicacion);
             if (incidencia.TipoIncidencia == "HW")
             {
-                AgregarLinea("Tipo HW", incidencia.IdTipoHwNavigation.Descripcion ?? "N/A");
-                AgregarLinea("Modelo", incidencia.Modelo ?? "N/A");
-                AgregarLinea("Número Serie", incidencia.NumeroSerie ?? "N/A");
+                if (incidencia.IdTipoHwNavigation != null)
+                {
+                    AgregarLinea("Tipo HW", incidencia.IdTipoHwNavigation.Descripcion ?? "N/A");
+                }
+                if (incidencia.Modelo != null)
+                {
+                    AgregarLinea("Modelo", incidencia.Modelo ?? "N/A");
+                }
+                if (incidencia.Modelo != null)
+                {
+                    AgregarLinea("Número Serie", incidencia.NumeroSerie ?? "N/A");
+                }
             }
 
             AgregarLinea("Descripción", incidencia.Descripcion);
