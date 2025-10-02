@@ -45,13 +45,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Folder Include=".Librerias externas\" />
 		<Folder Include="Resource\img\" />
 
 	</ItemGroup>
 
 	<ItemGroup>
 		<Reference Include="BluriSVG.Control">
-			<HintPath>..\..\..\..\Documents\TFG\Librerias externas\BluriSVG.Control.dll</HintPath>
+			<HintPath>.Librerias Externas\BluriSVG.Control.dll</HintPath>
+			
 		</Reference>
 	</ItemGroup>
 

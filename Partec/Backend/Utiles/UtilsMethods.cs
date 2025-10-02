@@ -5,20 +5,8 @@
     using System.Windows.Media;
     using MaterialDesignThemes.Wpf;
 
-    /// <summary>
-    /// Defines the <see cref="UtilsMethods" />
-    /// </summary>
     public static class UtilsMethods
     {
-        /// <summary>
-        /// The CrearTabItem
-        /// </summary>
-        /// <param name="nombreInterno">The nombreInterno<see cref="string"/></param>
-        /// <param name="texto">The texto<see cref="string"/></param>
-        /// <param name="icono">The icono<see cref="PackIconKind"/></param>
-        /// <param name="colorFondo">The colorFondo<see cref="string"/></param>
-        /// <param name="colorTexto">The colorTexto<see cref="string"/></param>
-        /// <returns>The <see cref="TabItem"/></returns>
         public static TabItem CrearTabItem(
             string nombreInterno = "tbiIncidencia",
             string texto = "Incidencia",

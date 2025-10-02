@@ -1,30 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using LiveChartsCore;
-using LiveChartsCore.Drawing;
-using LiveChartsCore.Geo;
-using LiveChartsCore.SkiaSharpView;
-using LiveChartsCore.SkiaSharpView.Drawing.Geometries;
-using LiveChartsCore.SkiaSharpView.Painting;
-using LiveChartsCore.SkiaSharpView.SKCharts;
-using LiveChartsCore.SkiaSharpView.VisualElements;
-using LiveChartsCore.SkiaSharpView.WPF;
-using Microsoft.Win32;
-using Partec.Backend.Modelo;
-using PdfSharp.Drawing;
-using PdfSharp.Pdf;
-using SkiaSharp;
-
-namespace Partec.Backend.Utiles
+﻿namespace Partec.Backend.Utiles
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
+    using LiveChartsCore;
+    using LiveChartsCore.Drawing;
+    using LiveChartsCore.Geo;
+    using LiveChartsCore.SkiaSharpView;
+    using LiveChartsCore.SkiaSharpView.Drawing.Geometries;
+    using LiveChartsCore.SkiaSharpView.Painting;
+    using LiveChartsCore.SkiaSharpView.SKCharts;
+    using LiveChartsCore.SkiaSharpView.VisualElements;
+    using LiveChartsCore.SkiaSharpView.WPF;
+    using Microsoft.Win32;
+    using Partec.Backend.Modelo;
+    using PdfSharp.Drawing;
+    using PdfSharp.Pdf;
+    using SkiaSharp;
+
     public static class ArchivoHelper
     {
         public static List<Archivo> GuardarArchivosIncidenciaYCrearObjetos(
